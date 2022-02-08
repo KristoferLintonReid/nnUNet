@@ -348,15 +348,14 @@ class GenericPreprocessor(object):
             class_locs[c] = selected
             print(c, target_num_samples)
         properties['class_locations'] = class_locs
-
+        
         print("saving: ", os.path.join(output_folder_stage, "%s.npz" % case_identifier))
-        np.savez_compressed(os.path.join(output_folder_stage, "%s.npz" % case_identifier),
-                            data=all_data.astype(np.float32))
+        np.savez_compressed(os.path.join(output_folder_stage, "%s.npz" % case_identifier), data=all_data.astype(np.float32))
+        np.savez_compressed(os.path.join(output_folder_stage+"\\"+case_identifier.split("\\")[-1]+".npz"), data=all_data.astype(np.float32))
         with open(os.path.join(output_folder_stage, "%s.pkl" % case_identifier), 'wb') as f:
             pickle.dump(properties, f)
-
-    def run(self, target_spacings, input_folder_with_cropped_npz, output_folder, data_identifier,
-            num_threads=default_num_threads, force_separate_z=None):
+        with open(os.path.join(output_folder_stage+"\\"+case_identifier.split("\\")[-1]+".pkl"), 'wb') as f:
+            pickle.dump(properties, f)
         """
 
         :param target_spacings: list of lists [[1.25, 1.25, 5]]
